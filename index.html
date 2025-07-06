@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe - Premium Gaming Experience</title>
+    <meta name="description" content="Play the Tic-Tac-Toe game with stunning visuals, sound effects, and advanced features. Challenge friends or AI!">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <div class="game-card">
+            <!-- Header -->
+            <div class="header">
+                <div class="title-section">
+                    <div class="icon-wrapper">
+                        <svg class="game-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+                        </svg>
+                    </div>
+                    <h1 class="game-title">Tic-Tac-Toe</h1>
+                </div>
+                
+                <!-- Game Mode Selector -->
+                <div class="game-mode-selector">
+                    <button class="mode-btn active" data-mode="pvp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Player vs Player
+                    </button>
+                    <button class="mode-btn" data-mode="ai">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        Player vs AI
+                    </button>
+                </div>
+
+                <!-- Difficulty Selector (for AI mode) -->
+                <div class="difficulty-selector hidden" id="difficultySelector">
+                    <label>AI Difficulty:</label>
+                    <select id="difficultySelect">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                        <option value="impossible">Impossible</option>
+                    </select>
+                </div>
+                
+                <!-- Game Status -->
+                <div class="game-status" id="gameStatus">
+                    <div class="status-content">
+                        <span id="statusText">Player X's Turn</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Score Board -->
+            <div class="scoreboard">
+                <div class="score-item">
+                    <div class="score-label">Player X</div>
+                    <div class="score-value" id="scoreX">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Draws</div>
+                    <div class="score-value" id="scoreDraw">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Player O</div>
+                    <div class="score-value" id="scoreO">0</div>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div class="board-container">
+                <div class="game-board" id="gameBoard">
+                    <div class="square" data-index="0"></div>
+                    <div class="square" data-index="1"></div>
+                    <div class="square" data-index="2"></div>
+                    <div class="square" data-index="3"></div>
+                    <div class="square" data-index="4"></div>
+                    <div class="square" data-index="5"></div>
+                    <div class="square" data-index="6"></div>
+                    <div class="square" data-index="7"></div>
+                    <div class="square" data-index="8"></div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="controls">
+                <div class="control-row">
+                    <button class="control-btn new-game-btn" id="newGameBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M3 21v-5h5"/>
+                        </svg>
+                        New Game
+                    </button>
+                    <button class="control-btn reset-score-btn" id="resetScoreBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 6h18"/>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                        </svg>
+                        Reset Score
+                    </button>
+                </div>
+
+                <div class="control-row">
+                    <button class="control-btn sound-btn" id="soundBtn">
+                        <svg class="btn-icon sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        </svg>
+                        <svg class="btn-icon sound-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <line x1="23" y1="9" x2="17" y2="15"/>
+                            <line x1="17" y1="9" x2="23" y2="15"/>
+                        </svg>
+                        Sound
+                    </button>
+                    <button class="control-btn theme-btn" id="themeBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        Theme
+                    </button>
+                </div>
+
+                <!-- Player Indicators -->
+                <div class="player-indicators">
+                    <div class="player-indicator player-x active" id="playerX">
+                        <div class="player-avatar">
+                            <span class="player-symbol">X</span>
+                        </div>
+                        <div class="player-info">
+                            <span class="player-label">Player X</span>
+                            <span class="player-status">Your Turn</span>
+                        </div>
+                    </div>
+                    <div class="player-indicator player-o" id="playerO">
+                        <div class="player-avatar">
+                            <span class="player-symbol">O</span>
+                        </div>
+                        <div class="player-info">
+                            <span class="player-label">Player O</span>
+                            <span class="player-status">Waiting</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Winner Celebration -->
+            <div class="celebration hidden" id="celebration">
+                <div class="celebration-content">
+                    <div class="celebration-emoji">🎉</div>
+                    <p class="celebration-text" id="celebrationText">
+                        Congratulations Player X!
+                    </p>
+                    <div class="celebration-confetti">
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Draw Message -->
+            <div class="draw-message hidden" id="drawMessage">
+                <div class="draw-content">
+                    <div class="draw-emoji">🤝</div>
+                    <p class="draw-text">
+                        Excellent match! It's a tie!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Game History -->
+            <div class="game-history" id="gameHistory">
+                <h3>Recent Games</h3>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal hidden" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Game Settings</h2>
+                <button class="close-btn" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>Animation Speed</label>
+                    <input type="range" id="animationSpeed" min="0.5" max="2" step="0.1" value="1">
+                </div>
+                <div class="setting-group">
+                    <label>Board Theme</label>
+                    <select id="boardTheme">
+                        <option value="classic">Classic</option>
+                        <option value="neon">Neon</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
